@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
-  resources :events
+
+
+  resource :user, only: :destroy do
+    get 'retire'
+  end
+
+  resources :events, except: :index do
+    resources :tickets, only: [:new, :create, :destroy]
+  end
 
   root to:'welcome#index'
   get '/auth/:provider/callback' => 'sessions#create'
